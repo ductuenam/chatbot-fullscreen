@@ -18,12 +18,40 @@
             height: 100vh;
             border: none;
         }
+        /* Nút đặt lại */
+        #reset-chat {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #0044ff;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            z-index: 9999;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Nhúng chatbot qua iframe -->
-    <iframe src="https://app.lovinbot.ai/chatbot/kQRGiwA7t6R6JoJu"></iframe>
+    <!-- Nút đặt lại cuộc trò chuyện -->
+    <button id="reset-chat">🔄 Đặt lại chat</button>
+
+    <!-- Nhúng chatbot -->
+    <iframe id="chatbot-frame" src="https://app.lovinbot.ai/chatbot/kQRGiwA7t6R6JoJu"></iframe>
+
+    <script>
+        document.getElementById("reset-chat").addEventListener("click", function() {
+            // Xóa cache cuộc trò chuyện
+            localStorage.clear();
+            sessionStorage.clear();
+
+            // Làm mới chatbot
+            var iframe = document.getElementById("chatbot-frame");
+            iframe.src = iframe.src; // Reload iframe để reset chat
+        });
+    </script>
 
 </body>
 </html>
