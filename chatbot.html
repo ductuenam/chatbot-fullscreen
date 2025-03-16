@@ -43,13 +43,13 @@
 
     <script>
         document.getElementById("reset-chat").addEventListener("click", function() {
-            // Xóa cache cuộc trò chuyện
+            // Xóa cache trình duyệt
             localStorage.clear();
             sessionStorage.clear();
 
-            // Làm mới chatbot
+            // Reset bằng cách tải lại iframe với tham số đặc biệt
             var iframe = document.getElementById("chatbot-frame");
-            iframe.src = iframe.src; // Reload iframe để reset chat
+            iframe.src = "https://app.lovinbot.ai/chatbot/kQRGiwA7t6R6JoJu?reset=" + new Date().getTime();
         });
     </script>
 
