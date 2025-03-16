@@ -12,45 +12,79 @@
             height: 100vh;
             overflow: hidden;
             background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        iframe {
-            width: 100vw;
-            height: 100vh;
-            border: none;
+        #user-form {
+            text-align: center;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
         }
-        /* Nút đặt lại */
-        #reset-chat {
-            position: fixed;
-            top: 10px;
-            right: 10px;
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
             background-color: #0044ff;
             color: white;
-            padding: 10px 15px;
+            border: none;
             border-radius: 5px;
-            font-size: 14px;
             cursor: pointer;
-            z-index: 9999;
+            font-size: 16px;
+        }
+        #chatbot-container {
+            width: 100vw;
+            height: 100vh;
+            display: none;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
     </style>
 </head>
 <body>
 
-    <!-- Nút đặt lại cuộc trò chuyện -->
-    <button id="reset-chat">🔄 Đặt lại chat</button>
+    <!-- Form nhập thông tin -->
+    <div id="user-form">
+        <h2>Nhập thông tin để bắt đầu chat</h2>
+        <input type="text" id="user-name" placeholder="Nhập tên của bạn" required>
+        <input type="tel" id="user-phone" placeholder="Nhập số điện thoại" required>
+        <button onclick="startChat()">Bắt đầu chat</button>
+    </div>
 
-    <!-- Nhúng chatbot -->
-    <iframe id="chatbot-frame" src="https://app.lovinbot.ai/chatbot/kQRGiwA7t6R6JoJu"></iframe>
+    <!-- Chatbot sẽ hiển thị sau khi nhập thông tin -->
+    <div id="chatbot-container">
+        <iframe id="chatbot-frame" src=""></iframe>
+    </div>
 
     <script>
-        document.getElementById("reset-chat").addEventListener("click", function() {
-            // Xóa cache trình duyệt
-            localStorage.clear();
-            sessionStorage.clear();
+        function startChat() {
+            var name = document.getElementById("user-name").value;
+            var phone = document.getElementById("user-phone").value;
 
-            // Reset bằng cách tải lại iframe với tham số đặc biệt
-            var iframe = document.getElementById("chatbot-frame");
-            iframe.src = "https://app.lovinbot.ai/chatbot/kQRGiwA7t6R6JoJu?reset=" + new Date().getTime();
-        });
+            if (name.trim() === "" || phone.trim() === "") {
+                alert("Vui lòng nhập đầy đủ tên và số điện thoại!");
+                return;
+            }
+
+            // Ẩn form, hiển thị chatbot
+            document.getElementById("user-form").style.display = "none";
+            document.getElementById("chatbot-container").style.display = "block";
+
+            // Gửi thông tin người dùng vào chatbot qua URL (nếu Lovinbot hỗ trợ)
+            var chatbotURL = "https://app.lovinbot.ai/chatbot/kQRGiwA7t6R6JoJu?name=" + encodeURIComponent(name) + "&phone=" + encodeURIComponent(phone);
+            document.getElementById("chatbot-frame").src = chatbotURL;
+        }
     </script>
 
 </body>
